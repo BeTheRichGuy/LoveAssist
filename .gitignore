@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+
+# env / secrets (API 키는 절대 커밋하지 않는다)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Cloudflare Workers
+.wrangler/
+
+# LLM 비교용 대화 샘플: 가명 처리했더라도 저장소에 올리지 않는다
+evals/samples/
+evals/results/
+evals/test_answer/
+
+# 배포 번들 검사용 (docs/security/release-checklist.md)
+dist-check/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.*
+
+# typescript
+*.tsbuildinfo
+
+# 캐릭터 원본 묶음 그림 (잘라 낸 것은 apps/mobile/assets/characters에 커밋)
+docs/design/character-sheets/

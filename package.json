@@ -1,0 +1,37 @@
+{
+  "name": "loveassist",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "evals"
+  ],
+  "scripts": {
+    "mobile": "npm run start -w @loveassist/mobile",
+    "mobile:web": "npm run web -w @loveassist/mobile",
+    "relay": "npm run dev -w @loveassist/relay",
+    "relay:smoke": "npm run smoke -w @loveassist/relay --",
+    "relay:deploy": "npm run deploy -w @loveassist/relay",
+    "relay:secret": "npm run secret -w @loveassist/relay --",
+    "relay:secrets": "npm run secrets -w @loveassist/relay",
+    "eval:run": "npm run run -w @loveassist/evals --",
+    "eval:consistency": "npm run consistency -w @loveassist/evals --",
+    "eval:reveal": "npm run reveal -w @loveassist/evals --",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run format:check",
+    "relay:logs": "npm run logs -w @loveassist/relay",
+    "mobile:eas-init": "npm run eas:init -w @loveassist/mobile",
+    "mobile:build-android": "npm run build:android -w @loveassist/mobile",
+    "mobile:build-preview": "npm run build:preview -w @loveassist/mobile",
+    "eval:sim": "npm run sim -w @loveassist/evals",
+    "eval:coach": "npm run coach -w @loveassist/evals"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

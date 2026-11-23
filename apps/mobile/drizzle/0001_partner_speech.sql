@@ -1,0 +1,1 @@
+ALTER TABLE `traits` ADD `kind` text DEFAULT 'trait' NOT NULL;

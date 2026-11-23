@@ -1,0 +1,9 @@
+node_modules/
+.expo/
+.wrangler/
+dist/
+package-lock.json
+apps/mobile/assets/
+apps/mobile/expo-env.d.ts
+docs/design/
+apps/mobile/drizzle/

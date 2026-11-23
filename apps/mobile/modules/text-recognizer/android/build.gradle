@@ -1,0 +1,23 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.textrecognizer'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.textrecognizer"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  // 한국어 인식기 (라틴 문자 · 숫자도 읽는다). 모델이 앱에 들어 있는 bundled 버전이라 오프라인으로 동작한다
+  implementation 'com.google.mlkit:text-recognition-korean:16.0.1'
+}

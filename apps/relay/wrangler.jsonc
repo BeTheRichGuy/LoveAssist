@@ -1,0 +1,40 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "loveassist-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  // Workers Logs에는 요청 메타데이터(경로·상태 코드·소요 시간·토큰 수)만 남는다.
+  // 요청·응답 본문을 console.log로 찍지 말 것 (설계 원칙).
+  "observability": {
+    "enabled": true,
+  },
+  // 서버 코드를 미국 동부에서 실행한다. 한국 사용자의 요청이 홍콩(HKG) 데이터센터로 들어오면
+  // Anthropic이 지원하지 않는 지역이라 403으로 막는다 (2026-10-13 확인: HKG는 매번 403, NRT는 200).
+  // Anthropic API도 미국에 있어서 지연 시간 손해는 거의 없다.
+  "placement": {
+    "region": "aws:us-east-1",
+  },
+  // 사용량 제한 (period는 10 또는 60초만 가능, 위치별로 따로 세는 느슨한 제한).
+  // 설치 등록은 IP별, AI 호출은 설치 ID별. 총비용 상한은 Anthropic 콘솔의 워크스페이스 한도로 건다.
+  "ratelimits": [
+    { "name": "RL_INSTALL", "namespace_id": "1001", "simple": { "limit": 5, "period": 60 } },
+    { "name": "RL_ANALYZE", "namespace_id": "1002", "simple": { "limit": 5, "period": 60 } },
+    { "name": "RL_SIMULATE", "namespace_id": "1003", "simple": { "limit": 20, "period": 60 } },
+    { "name": "RL_SCORE", "namespace_id": "1004", "simple": { "limit": 20, "period": 60 } },
+    { "name": "RL_STYLE", "namespace_id": "1005", "simple": { "limit": 3, "period": 60 } },
+  ],
+  // 설치별 하루 한도 (한국 시간 자정 초기화). 횟수만 세는 Durable Object, 3일 안 쓰면 기록 삭제.
+  // 값을 바꾸고 다시 배포하면 바로 적용된다. 없으면 src/quota.ts의 기본값
+  "vars": {
+    "DAILY_LIMIT_ANALYZE": "20",
+    "DAILY_LIMIT_SIMULATE": "200",
+    "DAILY_LIMIT_SCORE": "200",
+    "DAILY_LIMIT_STYLE": "5",
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "USAGE", "class_name": "UsageCounter" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["UsageCounter"] }],
+  // 비밀 값(ANTHROPIC_API_KEY, TOKEN_SECRET, INVITE_CODE, 선택: ANTHROPIC_WORKSPACE_ID)은
+  // 배포 환경에선 `npx wrangler secret put <이름>`, 로컬에선 .dev.vars 파일에 둔다 (커밋 안 됨).
+}

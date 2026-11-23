@@ -1,0 +1,26 @@
+{
+  "name": "@loveassist/evals",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "run": "tsx src/run.ts",
+    "consistency": "tsx src/consistency.ts",
+    "reveal": "tsx src/reveal.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "sim": "tsx src/sim-check.ts",
+    "coach": "tsx src/coach-check.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "@loveassist/relay": "*",
+    "@loveassist/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3"
+  }
+}
